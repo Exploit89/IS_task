@@ -13,5 +13,8 @@ public class ChunkModel : MonoBehaviour
     private Player _player;
     private Vector3 _anchorPosition;
 
-
+    public void SetAnchorPosition(GameObject anchor)
+    {
+        _anchorPosition = anchor.transform.position;
+    }
 }
