@@ -7,8 +7,11 @@ public class ChunkModel : MonoBehaviour
 {
     private ChunkCreator _chunkCreator;
     private MeshRenderer _meshRenderer;
-    private DecorationModel _decorationModel;
-    private ObstacleModel _obstacleModel;
+    private List<DecorationModel> _decorations;
+    private List<ObstacleModel> _obstacles;
     private Dictionary<string, ChunkModel> _neighbours;
     private Player _player;
+    private Vector3 _anchorPosition;
+
+
 }
