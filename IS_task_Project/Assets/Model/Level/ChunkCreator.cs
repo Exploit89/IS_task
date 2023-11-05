@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ChunkCreator : MonoBehaviour
 {
-    [SerializeField] private GameObject _chunkPrefab;
+    [SerializeField] private GameObject _chunkTilePrefab;
     [SerializeField] private List<DecorationModel> _decorations;
     [SerializeField] private List<ObstacleModel> _obstacles;
-    [SerializeField] private GameObject _anchorPrefab;
+    [SerializeField] private GameObject _chunkPrefab;
     [SerializeField] private Player _player;
 
     private Dictionary<string, float[]> _offsets;
@@ -17,15 +18,10 @@ public class ChunkCreator : MonoBehaviour
 
     private void Start()
     {
-        CreateStartChunks();
+        CreateStartChunk();
     }
 
-    private void Update()
-    {
-        CreateRandomChunks();
-    }
-
-    private void CreateStartChunks()
+    private void CreateStartChunk()
     {
         _offsets = new Dictionary<string, float[]>
         {
@@ -39,21 +35,22 @@ public class ChunkCreator : MonoBehaviour
             { "left", new float[] { 0, 0, -_chunkSideSize } },
             { "left-up", new float[] { _chunkSideSize, 0, -_chunkSideSize } }
         };
-
-        var anchor = Instantiate(_anchorPrefab, new Vector3 (0,0,0),Quaternion.identity );
+        var offset = _offsets["central"];
+        var chunk = Instantiate(_chunkPrefab, new Vector3 (offset[0], offset[1], offset[2]),Quaternion.identity );
+        chunk.GetComponent<ChunkModel>().SetAnchorPosition(chunk);
 
         foreach (var item in _offsets)
         {
             Vector3 vector = new Vector3(item.Value[0], item.Value[1], item.Value[2]);
-            GameObject chunk = Instantiate(_chunkPrefab, vector, Quaternion.identity);
+            GameObject chunkTile = Instantiate(_chunkTilePrefab, vector, Quaternion.identity);
 
             if (item.Key != "central")
             {
-                CreateDecorations(chunk);
-                CreateObstacles(chunk);
+                CreateDecorations(chunkTile);
+                CreateObstacles(chunkTile);
             }
-            chunk.transform.parent = anchor.transform;
-            chunk.GetComponent<ChunkModel>().SetAnchorPosition(anchor);
+
+            chunkTile.transform.parent = chunk.transform;
         }
     }
 
@@ -84,29 +81,6 @@ public class ChunkCreator : MonoBehaviour
             var obstacle = Instantiate(_obstacles[random], chunk.transform.position, Quaternion.identity);
             obstacle.transform.parent = chunk.transform;
             obstacle.transform.position += new Vector3(randomX, 1, randomY);
-        }
-    }
-
-    private void CreateRandomChunks()
-    {
-        if (true)
-        {
-
-        }
-
-        foreach (var item in _offsets)
-        {
-            Vector3 vector = new Vector3(item.Value[0], item.Value[1], item.Value[2]);
-            GameObject chunk = Instantiate(_chunkPrefab, vector, Quaternion.identity);
-            var anchor = Instantiate(_anchorPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-
-            if (item.Key != "central")
-            {
-                CreateDecorations(chunk);
-                CreateObstacles(chunk);
-            }
-            chunk.transform.parent = anchor.transform;
-            chunk.GetComponent<ChunkModel>().SetAnchorPosition(anchor);
         }
     }
 }

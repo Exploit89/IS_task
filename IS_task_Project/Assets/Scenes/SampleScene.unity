@@ -501,13 +501,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd328f49c11608e45a7ec7ed615fa26f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chunkPrefab: {fileID: 8758201757399896715, guid: f512a64fe56386540affc8e952487390, type: 3}
+  _chunkTilePrefab: {fileID: 8758201757399896715, guid: f512a64fe56386540affc8e952487390, type: 3}
   _decorations:
   - {fileID: -3641120775751892007, guid: 80618a19b92cacd40914833f3f236f60, type: 3}
   _obstacles:
   - {fileID: -4541364559303560266, guid: 34754837ff6029b42844184c8027f0a6, type: 3}
   - {fileID: -8964897603090541776, guid: 0cfffb9acfdd9d94c81ac4fc645fd695, type: 3}
-  _anchorPrefab: {fileID: 1908831820112636213, guid: de47badf3a05f564f9fadc8bb711c02f, type: 3}
+  _chunkPrefab: {fileID: 1908831820112636213, guid: de47badf3a05f564f9fadc8bb711c02f, type: 3}
   _player: {fileID: 1050847978}
 --- !u!4 &1464628981
 Transform:
