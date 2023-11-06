@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Модель чанка. Создаёт якоря для сгенерированного чанка, устанавливает основной якорь чанка. 
+/// Передает объект создателя чанков якорям.
+/// </summary>
+/// 
+
 public class ChunkModel : MonoBehaviour
 {
     [SerializeField] private GameObject _boardAnchorPrefab;
 
     private ChunkCreator _chunkCreator;
-    private MeshRenderer _meshRenderer;
-    private List<DecorationModel> _decorations;
-    private List<ObstacleModel> _obstacles;
-    private Dictionary<string, ChunkModel> _neighbours;
-    private Player _player;
     private Vector3 _mainAnchorPosition;
     private Dictionary<string, float[]> _anchors;
     private float _distanceToBoard = 20;

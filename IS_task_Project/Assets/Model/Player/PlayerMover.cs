@@ -1,6 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// ”правление моделью игрока. WSAD.
+/// </summary>
+/// 
 
 public class PlayerMover : MonoBehaviour
 {

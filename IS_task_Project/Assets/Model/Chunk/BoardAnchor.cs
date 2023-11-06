@@ -1,34 +1,29 @@
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Якорь границы чанка. Всего у каждого чанка 8 границ, 4 по сторонам и 4 по углам. Якорь задает направление новой
+/// позиции для генерации чанка.
+/// </summary>
+/// 
 public class BoardAnchor : MonoBehaviour
 {
-    private string _name;
     private ChunkCreator _chunkCreator;
-    private Player _player;
-    private bool _freeChunk = true;
+    private string _name;
     private int _anchorOffset = 40;
 
     public string Name => _name;
 
-    public void SetPlayer(Player player)
+    private void OnTriggerEnter(Collider collider)
     {
-        _player = player;
+        if (collider != null && collider.TryGetComponent(out Player player))
+        {
+            _chunkCreator.TryCreateChunk(gameObject.GetComponent<BoardAnchor>());
+        }
     }
 
     public void SetChunkCreator(ChunkCreator chunkCreator)
     {
         _chunkCreator = chunkCreator;
-    }
-
-    public void SetChunkBusy()
-    {
-        _freeChunk = false;
-    }
-
-    public bool IsFreeChunk()
-    {
-        return _freeChunk;
     }
 
     public Vector3 GetNewPosition()
@@ -67,27 +62,13 @@ public class BoardAnchor : MonoBehaviour
         }
         return position;
     }
-
     public BoardAnchor GetAnchor()
     {
         return gameObject.GetComponent<BoardAnchor>();
     }
 
-    public void SetColliderPosition()
-    {
-        gameObject.GetComponent<Collider>().transform.position *= -1;
-    }
-
     public void SetNames(string name)
     {
         _name = name;
-    }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider != null && collider.TryGetComponent(out Player player))
-        {
-            _chunkCreator.TryCreateChunk(gameObject.GetComponent<BoardAnchor>());
-        }
     }
 }

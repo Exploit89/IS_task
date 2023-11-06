@@ -357,14 +357,11 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.4f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Model/Chunk/BoardAnchor.cs"
 "Assets/Model/Chunk/ChunkModel.cs"
-"Assets/Model/Chunk/ChunkTileModel.cs"
 "Assets/Model/Decoration/DecorationModel.cs"
 "Assets/Model/Level/ChunkCreator.cs"
 "Assets/Model/Obstacle/ObstacleModel.cs"
 "Assets/Model/Player/Player.cs"
 "Assets/Model/Player/PlayerMover.cs"
-"Assets/View/ChunkView.cs"
-"Assets/View/PlayerView.cs"
 -langversion:9.0
 
 /deterministic
