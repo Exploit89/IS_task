@@ -34,7 +34,6 @@ public class BoardAnchor : MonoBehaviour
     public Vector3 GetNewPosition()
     {
         Vector3 position = transform.position;
-        Debug.Log(_name + " anchor current pos = " + transform.position);
 
         switch (_name)
         {

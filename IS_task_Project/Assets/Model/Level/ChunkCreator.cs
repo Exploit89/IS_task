@@ -9,9 +9,11 @@ public class ChunkCreator : MonoBehaviour
     [SerializeField] private GameObject _chunkPrefab;
     [SerializeField] private Player _player;
 
+    private BoardAnchor _boardAnchor;
+
     private Dictionary<string, float[]> _offsets;
     
-    private int _decorationCount = 5;
+    private int _decorationCount = 3;
     private int _minDecorationCount = 1;
     private int _chunkSideSize = 20;
     private int _halfChunkSide = 10;
@@ -30,20 +32,18 @@ public class ChunkCreator : MonoBehaviour
     public void TryCreateChunk(BoardAnchor boardAnchor)
     {
         Vector3 startVector = boardAnchor.transform.GetComponentInParent<ChunkModel>().MainAnchorPosition;
-        Vector3 directionVector = startVector + boardAnchor.GetNewPosition(); //
+        Vector3 directionVector = boardAnchor.gameObject.transform.localPosition;
+        startVector.y += 5;
+        directionVector.y += 5;
         RaycastHit hit;
         int layer = LayerMask.NameToLayer("ChunkAnchorCollider");
         int layerMask = 1 << layer;
 
         if (Physics.Raycast(startVector, directionVector, out hit, 85, layerMask))
         {
-            Debug.Log("HIT");
-            Debug.Log(startVector + " to " + directionVector);
         }
         else
         {
-            Debug.Log("NO_Hit");
-            Debug.Log(startVector + " to " + directionVector);
             if (boardAnchor.IsFreeChunk())
             {
                 CreateChunk(boardAnchor.GetAnchor());
@@ -94,7 +94,6 @@ public class ChunkCreator : MonoBehaviour
     private void CreateChunk(BoardAnchor boardAnchor)
     {
         var chunk = Instantiate(_chunkPrefab, boardAnchor.GetNewPosition(), Quaternion.identity);
-        Debug.Log("anchor get new pos" + boardAnchor.GetNewPosition());
         chunk.GetComponent<ChunkModel>().SetChunkCreator(gameObject);
         chunk.GetComponent<ChunkModel>().SetAnchorPosition(chunk, GetOppositeName(boardAnchor.Name));
         chunk.transform.SetParent(transform);
@@ -106,6 +105,7 @@ public class ChunkCreator : MonoBehaviour
             CreateDecorations(chunkTile);
             CreateObstacles(chunkTile);
             chunkTile.transform.parent = chunk.transform;
+            chunkTile.GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
         }
     }
 
@@ -138,9 +138,11 @@ public class ChunkCreator : MonoBehaviour
         {
             int randomX = Random.Range(0, _halfChunkSide);
             int randomY = Random.Range(0, _halfChunkSide);
+            int randomRotation = Random.Range(0, 360);
             var obstacle = Instantiate(_obstacles[random], chunk.transform.position, Quaternion.identity);
             obstacle.transform.parent = chunk.transform;
             obstacle.transform.position += new Vector3(randomX, 1, randomY);
+            obstacle.transform.rotation = Quaternion.Euler(new Vector3(0, randomRotation, 0));
         }
     }
 }
